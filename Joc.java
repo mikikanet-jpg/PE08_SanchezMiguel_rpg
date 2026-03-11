@@ -82,7 +82,9 @@ public class Joc {
     int saviesa = demanarCaracteristica("Saviesa", puntsRestants);
     puntsRestants -= saviesa;
 
-    int carisma = demanarCaracteristica("Carisma", puntsRestants);
+    int carisma = puntsRestants;
+
+    System.out.println("Carisma assignat automaticament: " + carisma);
 
     personatges[totalPersonatges] =
             new Personatge(nom, edat, forca, destresa, constitucio, inteligencia, saviesa, carisma);
@@ -156,5 +158,20 @@ public class Joc {
         p.afegirArma(a);
 
         System.out.println("Arma afegida!");
+    }
+
+    public static void mostrarPersonatges() {
+
+        if (totalPersonatges == 0) {
+            System.out.println("No hi ha personatges.");
+            return;
+        }
+
+        for (int i = 0; i < totalPersonatges; i++) {
+
+            System.out.println("\nPersonatge " + i);
+            personatges[i].mostrarPersonatge();
+
+        }
     }
 }
