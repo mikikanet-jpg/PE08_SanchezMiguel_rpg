@@ -1,10 +1,12 @@
 package PE08_SanchezMiguel_rpg;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Joc {
 
     static Scanner sc = new Scanner(System.in);
+    static Random rand = new Random();
 
     static Personatge[] personatges = new Personatge[10];
     static int totalPersonatges = 0;
@@ -54,45 +56,65 @@ public class Joc {
 
     public static void crearPersonatge() {
 
-    if (totalPersonatges >= personatges.length) {
-        System.out.println("Maxim de personatges.");
-        return;
+        if (totalPersonatges >= personatges.length) {
+            System.out.println("Maxim de personatges.");
+            return;
+        }
+
+        System.out.println("Nom:");
+        String nom = sc.next();
+
+        System.out.println("Edat:");
+        int edat = sc.nextInt();
+
+        System.out.println("1 Manual");
+        System.out.println("2 Automatic");
+
+        int tipus = sc.nextInt();
+
+        int forca, destresa, constitucio, inteligencia, saviesa, carisma;
+
+        if (tipus == 1) {
+
+            int puntsRestants = 60;
+
+            forca = demanarCaracteristica("Força", puntsRestants);
+            puntsRestants -= forca;
+
+            destresa = demanarCaracteristica("Destresa", puntsRestants);
+            puntsRestants -= destresa;
+
+            constitucio = demanarCaracteristica("Constitució", puntsRestants);
+            puntsRestants -= constitucio;
+
+            inteligencia = demanarCaracteristica("Intel·ligència", puntsRestants);
+            puntsRestants -= inteligencia;
+
+            saviesa = demanarCaracteristica("Saviesa", puntsRestants);
+            puntsRestants -= saviesa;
+
+            carisma = puntsRestants;
+
+            System.out.println("Carisma assignat automaticament: " + carisma);
+
+        } else {
+
+            forca = rand.nextInt(16) + 5;
+            destresa = rand.nextInt(16) + 5;
+            constitucio = rand.nextInt(16) + 5;
+            inteligencia = rand.nextInt(16) + 5;
+            saviesa = rand.nextInt(16) + 5;
+            carisma = rand.nextInt(16) + 5;
+
+        }
+
+        personatges[totalPersonatges] =
+                new Personatge(nom, edat, forca, destresa, constitucio, inteligencia, saviesa, carisma);
+
+        totalPersonatges++;
+
+        System.out.println("Personatge creat!");
     }
-
-    System.out.println("Nom:");
-    String nom = sc.next();
-
-    System.out.println("Edat:");
-    int edat = sc.nextInt();
-
-    int puntsRestants = 60;
-
-    int forca = demanarCaracteristica("Força", puntsRestants);
-    puntsRestants -= forca;
-
-    int destresa = demanarCaracteristica("Destresa", puntsRestants);
-    puntsRestants -= destresa;
-
-    int constitucio = demanarCaracteristica("Constitució", puntsRestants);
-    puntsRestants -= constitucio;
-
-    int inteligencia = demanarCaracteristica("Intel·ligència", puntsRestants);
-    puntsRestants -= inteligencia;
-
-    int saviesa = demanarCaracteristica("Saviesa", puntsRestants);
-    puntsRestants -= saviesa;
-
-    int carisma = puntsRestants;
-
-    System.out.println("Carisma assignat automaticament: " + carisma);
-
-    personatges[totalPersonatges] =
-            new Personatge(nom, edat, forca, destresa, constitucio, inteligencia, saviesa, carisma);
-
-    totalPersonatges++;
-
-    System.out.println("Personatge creat!");
-}
 
     public static int demanarCaracteristica(String nom, int puntsRestants) {
 
