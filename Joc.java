@@ -25,6 +25,7 @@ public class Joc {
             System.out.println("1. Crear personatge");
             System.out.println("2. Afegir arma a personatge");
             System.out.println("3. Mostrar personatges");
+            System.out.println("4. Combat 1 vs 1");
             System.out.println("0. Sortir");
 
             opcio = sc.nextInt();
@@ -40,7 +41,11 @@ public class Joc {
                     break;
 
                 case 3:
-        
+                    mostrarPersonatges();
+                    break;
+
+                case 4:
+                    combat();
                     break;
 
                 case 0:
@@ -194,6 +199,93 @@ public class Joc {
             System.out.println("\nPersonatge " + i);
             personatges[i].mostrarPersonatge();
 
+        }
+    }
+
+    public static void combat() {
+
+        if (totalPersonatges < 2) {
+            System.out.println("Calen almenys 2 personatges.");
+            return;
+        }
+
+        System.out.println("Jugador 1 tria personatge");
+        Personatge p1 = escollirPersonatge();
+
+        System.out.println("Jugador 2 tria personatge");
+        Personatge p2 = escollirPersonatge();
+
+        if (p1 == p2) {
+            System.out.println("No poden ser el mateix personatge.");
+            return;
+        }
+
+        boolean tornJugador1 = true;
+
+        while (p1.getSalut() > 0 && p2.getSalut() > 0) {
+
+            Personatge atacant;
+            Personatge defensor;
+
+            if (tornJugador1) {
+                atacant = p1;
+                defensor = p2;
+            } else {
+                atacant = p2;
+                defensor = p1;
+            }
+
+            System.out.println("\nTorn de " + atacant.getNom());
+
+            System.out.println("1 Atacar");
+            System.out.println("2 Defensar");
+            System.out.println("3 Canviar arma");
+
+            int opcio = sc.nextInt();
+
+            if (opcio == 1) {
+
+                int dany = atacant.atacar();
+
+                if (defensor.esquivar()) {
+
+                    System.out.println(defensor.getNom() + " ha esquivat l'atac!");
+
+                } else {
+
+                    defensor.rebreDany(dany);
+                    System.out.println("Dany fet: " + dany);
+
+                }
+
+            } else if (opcio == 2) {
+
+                atacant.defensar();
+                System.out.println(atacant.getNom() + " es defensa.");
+
+            } else if (opcio == 3) {
+
+                atacant.mostrarArmes();
+                System.out.println("Tria arma:");
+                int pos = sc.nextInt();
+
+                atacant.equiparArma(pos);
+
+            }
+
+            atacant.regenerarVida();
+            atacant.regenerarMana();
+
+            defensor.regenerarVida();
+            defensor.regenerarMana();
+
+            tornJugador1 = !tornJugador1;
+        }
+
+        if (p1.getSalut() <= 0) {
+            System.out.println("\nHa guanyat " + p2.getNom());
+        } else {
+            System.out.println("\nHa guanyat " + p1.getNom());
         }
     }
 }
