@@ -62,9 +62,16 @@ public class Personatge {
     }
 
     public void afegirArma(Arma a) {
+
         if (totalArmes < inventari.length) {
+
             inventari[totalArmes] = a;
             totalArmes++;
+
+        } else {
+
+            System.out.println("Inventari ple");
+
         }
     }
 
@@ -204,9 +211,16 @@ public class Personatge {
         System.out.println("Salut: " + salut);
         System.out.println("Mana: " + mana);
         System.out.println("Nivell: " + nivell);
+        System.out.println("Armes:");
+        mostrarArmes();
     }
 
     public String getNom() {
     return nom;
 }
+
+    public int getSalut() {
+            return salut;
+        }
+
 }
