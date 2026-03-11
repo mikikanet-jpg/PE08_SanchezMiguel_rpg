@@ -26,6 +26,7 @@ public class Joc {
             System.out.println("2. Afegir arma a personatge");
             System.out.println("3. Mostrar personatges");
             System.out.println("4. Combat 1 vs 1");
+            System.out.println("5. Veure estadistiques personatge (per si el creas automatic)");
             System.out.println("0. Sortir");
 
             opcio = sc.nextInt();
@@ -46,6 +47,10 @@ public class Joc {
 
                 case 4:
                     combat();
+                    break;
+
+                case 5:
+                    veureEstadistiques();
                     break;
 
                 case 0:
@@ -121,6 +126,20 @@ public class Joc {
         System.out.println("Personatge creat!");
     }
 
+    public static void veureEstadistiques() {
+
+        Personatge p = escollirPersonatge();
+
+        if (p == null) return;
+
+        System.out.println("\n--- ESTADISTIQUES DEL PERSONATGE ---");
+
+        p.mostrarPersonatge();
+
+        System.out.println("Armes del personatge:");
+        p.mostrarArmes();
+    }
+
     public static int demanarCaracteristica(String nom, int puntsRestants) {
 
         int valor;
@@ -149,7 +168,7 @@ public class Joc {
         System.out.println("Escull personatge:");
 
         for (int i = 0; i < totalPersonatges; i++) {
-        System.out.println(i + " - " + personatges[i].getNom());
+            System.out.println(i + " - " + personatges[i].getNom());
         }
 
         int pos = sc.nextInt();
@@ -161,24 +180,52 @@ public class Joc {
         return null;
     }
 
-
     public static void afegirArma() {
 
         Personatge p = escollirPersonatge();
 
         if (p == null) return;
 
-        System.out.println("Nom arma:");
-        String nom = sc.next();
+        System.out.println("1 Crear arma manual");
+        System.out.println("2 Crear arma aleatoria");
 
-        System.out.println("Tipus:");
-        String tipus = sc.next();
+        int opcio = sc.nextInt();
 
-        System.out.println("Dany (1-100):");
-        int dany = sc.nextInt();
+        String nom;
+        String tipus;
+        int dany;
+        boolean magica;
 
-        System.out.println("Es magica? true/false:");
-        boolean magica = sc.nextBoolean();
+        if (opcio == 1) {
+
+            System.out.println("Nom arma:");
+            nom = sc.next();
+
+            System.out.println("Tipus:");
+            tipus = sc.next();
+
+            System.out.println("Dany (1-100):");
+            dany = sc.nextInt();
+
+            System.out.println("Es magica? true/false:");
+            magica = sc.nextBoolean();
+
+        } else {
+
+            String[] tipusArmes = {"Espasa", "Destral", "Arc", "Bastó"};
+
+            tipus = tipusArmes[rand.nextInt(tipusArmes.length)];
+            nom = tipus;
+            dany = rand.nextInt(100) + 1;
+            magica = rand.nextBoolean();
+
+            System.out.println("Arma generada:");
+            System.out.println("Nom: " + nom);
+            System.out.println("Tipus: " + tipus);
+            System.out.println("Dany: " + dany);
+            System.out.println("Magica: " + magica);
+
+        }
 
         Arma a = new Arma(nom, tipus, dany, magica);
 
@@ -236,6 +283,8 @@ public class Joc {
             }
 
             System.out.println("\nTorn de " + atacant.getNom());
+            System.out.println("Vida " + p1.getNom() + ": " + p1.getSalut());
+            System.out.println("Vida " + p2.getNom() + ": " + p2.getSalut());
 
             System.out.println("1 Atacar");
             System.out.println("2 Defensar");
@@ -270,7 +319,6 @@ public class Joc {
                 int pos = sc.nextInt();
 
                 atacant.equiparArma(pos);
-
             }
 
             atacant.regenerarVida();
@@ -279,13 +327,23 @@ public class Joc {
             defensor.regenerarVida();
             defensor.regenerarMana();
 
+            System.out.println("\n--- Vida actualitzada ---");
+            System.out.println(p1.getNom() + ": " + p1.getSalut());
+            System.out.println(p2.getNom() + ": " + p2.getSalut());
+
             tornJugador1 = !tornJugador1;
         }
 
         if (p1.getSalut() <= 0) {
+
             System.out.println("\nHa guanyat " + p2.getNom());
+            p2.pujarNivell();
+
         } else {
+
             System.out.println("\nHa guanyat " + p1.getNom());
+            p1.pujarNivell();
+
         }
     }
 }

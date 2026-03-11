@@ -75,7 +75,7 @@ public class Personatge {
         }
     }
 
-     public void mostrarArmes() {
+    public void mostrarArmes() {
 
         if (totalArmes == 0) {
 
@@ -154,7 +154,7 @@ public class Personatge {
 
         }
     }
-    
+
     public boolean esquivar() {
 
         double prob = (destresa - 5) * 3.33;
@@ -172,7 +172,7 @@ public class Personatge {
 
     public void regenerarVida() {
 
-        salut += constitucio * 3;
+        salut += constitucio * 0.2;
 
         if (salut > calcularSalutMax()) {
 
@@ -202,25 +202,44 @@ public class Personatge {
         salut = calcularSalutMax();
         mana = calcularManaMax();
 
+        System.out.println(nom + " puja a nivell " + nivell);
     }
 
     public void mostrarPersonatge() {
 
         System.out.println("Nom: " + nom);
         System.out.println("Edat: " + edat);
-        System.out.println("Salut: " + salut);
-        System.out.println("Mana: " + mana);
+
+        System.out.println("\n--- ATRIBUTS ---");
+        System.out.println("Força: " + forca);
+        System.out.println("Destresa: " + destresa);
+        System.out.println("Constitució: " + constitucio);
+        System.out.println("Intel·ligència: " + inteligencia);
+        System.out.println("Saviesa: " + saviesa);
+        System.out.println("Carisma: " + carisma);
+
+        System.out.println("\n--- ESTAT ---");
+        System.out.println("Salut: " + salut + "/" + calcularSalutMax());
+        System.out.println("Mana: " + mana + "/" + calcularManaMax());
         System.out.println("Nivell: " + nivell);
-        System.out.println("Armes:");
+
+        if (armaEquipada != null) {
+            System.out.println("Arma equipada: " + armaEquipada.getNom());
+        }
+
+        System.out.println("\n--- INVENTARI ---");
         mostrarArmes();
     }
 
     public String getNom() {
-    return nom;
-}
+        return nom;
+    }
 
     public int getSalut() {
-            return salut;
-        }
+        return salut;
+    }
 
+    public int getMana() {
+        return mana;
+    }
 }
