@@ -2,6 +2,7 @@ package PE08_SanchezMiguel_rpg;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Joc {
 
@@ -13,6 +14,30 @@ public class Joc {
 
     public static void main(String[] args) {
         menu();
+    }
+
+    public static int llegirInt() {
+        while (true) {
+            try {
+                int valor = sc.nextInt();
+                return valor;
+            } catch (InputMismatchException e) {
+                System.out.println("Valor incorrecte. Introdueix un número.");
+                sc.next();
+            }
+        }
+    }
+
+    public static boolean llegirBoolean() {
+        while (true) {
+            try {
+                boolean valor = sc.nextBoolean();
+                return valor;
+            } catch (InputMismatchException e) {
+                System.out.println("Valor incorrecte. Escriu true o false.");
+                sc.next();
+            }
+        }
     }
 
     public static void menu() {
@@ -29,7 +54,7 @@ public class Joc {
             System.out.println("5. Veure estadistiques personatge (per si el creas automatic)");
             System.out.println("0. Sortir");
 
-            opcio = sc.nextInt();
+            opcio = llegirInt();
 
             switch (opcio) {
 
@@ -75,12 +100,12 @@ public class Joc {
         String nom = sc.next();
 
         System.out.println("Edat:");
-        int edat = sc.nextInt();
+        int edat = llegirInt();
 
         System.out.println("1 Manual");
         System.out.println("2 Automatic");
 
-        int tipus = sc.nextInt();
+        int tipus = llegirInt();
 
         int forca, destresa, constitucio, inteligencia, saviesa, carisma;
 
@@ -147,7 +172,7 @@ public class Joc {
         do {
 
             System.out.println(nom + " (5-20) | punts restants: " + puntsRestants);
-            valor = sc.nextInt();
+            valor = llegirInt();
 
             if (valor < 5 || valor > 20 || valor > puntsRestants) {
                 System.out.println("Valor incorrecte.");
@@ -171,7 +196,7 @@ public class Joc {
             System.out.println(i + " - " + personatges[i].getNom());
         }
 
-        int pos = sc.nextInt();
+        int pos = llegirInt();
 
         if (pos >= 0 && pos < totalPersonatges) {
             return personatges[pos];
@@ -189,7 +214,7 @@ public class Joc {
         System.out.println("1 Crear arma manual");
         System.out.println("2 Crear arma aleatoria");
 
-        int opcio = sc.nextInt();
+        int opcio = llegirInt();
 
         String nom;
         String tipus;
@@ -205,10 +230,10 @@ public class Joc {
             tipus = sc.next();
 
             System.out.println("Dany (1-100):");
-            dany = sc.nextInt();
+            dany = llegirInt();
 
             System.out.println("Es magica? true/false:");
-            magica = sc.nextBoolean();
+            magica = llegirBoolean();
 
         } else {
 
@@ -290,7 +315,7 @@ public class Joc {
             System.out.println("2 Defensar");
             System.out.println("3 Canviar arma");
 
-            int opcio = sc.nextInt();
+            int opcio = llegirInt();
 
             if (opcio == 1) {
 
@@ -316,7 +341,7 @@ public class Joc {
 
                 atacant.mostrarArmes();
                 System.out.println("Tria arma:");
-                int pos = sc.nextInt();
+                int pos = llegirInt();
 
                 atacant.equiparArma(pos);
             }

@@ -172,7 +172,7 @@ public class Personatge {
 
     public void regenerarVida() {
 
-        salut += constitucio * 0.2;
+        salut += constitucio * 1;
 
         if (salut > calcularSalutMax()) {
 
