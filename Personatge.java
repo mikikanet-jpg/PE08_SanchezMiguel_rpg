@@ -26,6 +26,8 @@ public class Personatge {
 
     private boolean defensant;
 
+    Random rand = new Random();
+
     public Personatge(String nom, int edat,
             int forca, int destresa, int constitucio,
             int inteligencia, int saviesa, int carisma) {
@@ -65,7 +67,136 @@ public class Personatge {
             totalArmes++;
         }
     }
+
+     public void mostrarArmes() {
+
+        if (totalArmes == 0) {
+
+            System.out.println("No té armes.");
+            return;
+
+        }
+
+        for (int i = 0; i < totalArmes; i++) {
+
+            System.out.println(i + " - " + inventari[i].getNom());
+
+        }
+    }
+
+    public void equiparArma(int posicio) {
+
+        if (posicio < 0 || posicio >= totalArmes) {
+
+            System.out.println("Posicio incorrecta");
+            return;
+
+        }
+
+        Arma a = inventari[posicio];
+
+        if (a.esMagica() && inteligencia < 10) {
+
+            System.out.println("No tens intel·ligència suficient per arma màgica");
+
+        } else {
+
+            armaEquipada = a;
+            System.out.println("Arma equipada: " + a.getNom());
+
+        }
+    }
+
+    public int atacar() {
+
+        int dany;
+
+        if (armaEquipada == null || !armaEquipada.esMagica()) {
+
+            int danyArma = 0;
+
+            if (armaEquipada != null) {
+                danyArma = armaEquipada.getDany();
+            }
+
+            dany = (int) (forca * (1 + danyArma / 100.0));
+
+        } else {
+
+            dany = (armaEquipada.getDany() * inteligencia) / 100;
+
+        }
+
+        return dany;
+    }
+
+    public void rebreDany(int dany) {
+
+        if (defensant) {
+
+            dany = dany / 2;
+            defensant = false;
+
+        }
+
+        salut -= dany;
+
+        if (salut < 0) {
+
+            salut = 0;
+
+        }
+    }
     
+    public boolean esquivar() {
+
+        double prob = (destresa - 5) * 3.33;
+
+        int num = rand.nextInt(100) + 1;
+
+        return num <= prob;
+    }
+
+    public void defensar() {
+
+        defensant = true;
+
+    }
+
+    public void regenerarVida() {
+
+        salut += constitucio * 3;
+
+        if (salut > calcularSalutMax()) {
+
+            salut = calcularSalutMax();
+
+        }
+    }
+
+    public void regenerarMana() {
+
+        mana += inteligencia * 2;
+
+        if (mana > calcularManaMax()) {
+
+            mana = calcularManaMax();
+
+        }
+    }
+
+    public void pujarNivell() {
+
+        nivell++;
+
+        forca++;
+        constitucio++;
+
+        salut = calcularSalutMax();
+        mana = calcularManaMax();
+
+    }
+
     public void mostrarPersonatge() {
 
         System.out.println("Nom: " + nom);
