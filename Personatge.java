@@ -5,19 +5,19 @@ public class Personatge {
     private String nom;
     private int edat;
 
-    private int salut;
-    private int mana;
+    protected int salut;
+    protected int mana;
 
-    private int forca;
-    private int destresa;
-    private int constitucio;
-    private int inteligencia;
-    private int saviesa;
-    private int carisma;
+    protected int forca;
+    protected int destresa;
+    protected int constitucio;
+    protected int inteligencia;
+    protected int saviesa;
+    protected int carisma;
 
     private int nivell; // atribut extra
 
-    private Arma[] inventari;
+    protected Arma[] inventari;
     private int totalArmes;
 
     private Arma armaEquipada;

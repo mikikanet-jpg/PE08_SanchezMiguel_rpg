@@ -141,9 +141,39 @@ public class Joc {
 
         }
 
-        personatges[totalPersonatges] =
-                new Personatge(nom, edat, forca, destresa, constitucio, inteligencia, saviesa, carisma);
+        System.out.println("Raza:");
+        System.out.println("1 Huma");
+        System.out.println("2 Elf");
+        System.out.println("3 Orc");
+        System.out.println("4 Nan");
 
+        int raza = llegirInt();
+
+        switch (raza) {
+            case 1:
+                personatges[totalPersonatges] =
+                    new Huma(nom, edat, forca, destresa, constitucio, inteligencia, saviesa, carisma);
+                break;
+
+            case 2:
+                personatges[totalPersonatges] =
+                    new Elf(nom, edat, forca, destresa, constitucio, inteligencia, saviesa, carisma);
+                break;
+
+            case 3:
+                personatges[totalPersonatges] =
+                    new Orc(nom, edat, forca, destresa, constitucio, inteligencia, saviesa, carisma);
+                break;
+
+            case 4:
+                personatges[totalPersonatges] =
+                    new Nan(nom, edat, forca, destresa, constitucio, inteligencia, saviesa, carisma);
+                break;
+
+            default:
+                System.out.println("Raza no valida");
+                return;
+        }
         totalPersonatges++;
 
         System.out.println("Personatge creat!");
