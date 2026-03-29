@@ -1,5 +1,3 @@
-package PE08_SanchezMiguel_rpg;
-
 public class Arma {
 
     private String nom;

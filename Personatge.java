@@ -1,5 +1,3 @@
-package PE08_SanchezMiguel_rpg;
-
 import java.util.Random;
 
 public class Personatge {
@@ -172,7 +170,7 @@ public class Personatge {
 
     public void regenerarVida() {
 
-        salut += constitucio * 0.2;
+        salut += constitucio * 1;
 
         if (salut > calcularSalutMax()) {
 
